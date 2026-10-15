@@ -1,0 +1,20 @@
+(() => {
+const audio=document.querySelector("#audio"),playButton=document.querySelector("#play"),playGlyph=playButton.querySelector(".play-glyph"),seek=document.querySelector("#seek"),currentTime=document.querySelector("#current-time"),duration=document.querySelector("#duration"),lines=[...document.querySelectorAll(".lyric-line")],scroll=document.querySelector("#lyrics-scroll"),toast=document.querySelector("#toast");
+audio.src="audio/cuando-te-veo-canto.mp3";let toastTimer;
+const fmt=n=>Number.isFinite(n)?String(Math.floor(n/60)).padStart(2,"0")+":"+String(Math.floor(n%60)).padStart(2,"0"):"00:00";
+function notify(s){toast.textContent=s;toast.classList.add("visible");clearTimeout(toastTimer);toastTimer=setTimeout(()=>toast.classList.remove("visible"),2400)}
+function playing(v){playGlyph.textContent=v?"Ⅱ":"▶";playButton.setAttribute("aria-label",v?"Pausar":"Reproducir");playButton.title=v?"Pausar":"Reproducir"}
+playButton.addEventListener("click",async()=>{if(audio.error||!audio.src){notify("Añade tu MP3 a la carpeta audio para activar la reproducción.");return}if(audio.paused){try{await audio.play();playing(true)}catch{notify("No se pudo reproducir el audio. Revisa la ruta del archivo.")}}else{audio.pause();playing(false)}});
+audio.addEventListener("play",()=>playing(true));audio.addEventListener("pause",()=>playing(false));audio.addEventListener("loadedmetadata",()=>{seek.max=Math.floor(audio.duration);duration.textContent=fmt(audio.duration)});
+audio.addEventListener("timeupdate",()=>{currentTime.textContent=fmt(audio.currentTime);seek.value=Math.floor(audio.currentTime);let active=0;lines.forEach((line,i)=>{if(audio.currentTime>=Number(line.dataset.time))active=i});setActive(active,false)});
+seek.addEventListener("input",()=>{if(Number.isFinite(audio.duration))audio.currentTime=Number(seek.value)});
+document.querySelector("#restart").addEventListener("click",()=>{if(audio.readyState)audio.currentTime=0;else notify("Añade el archivo de audio para comenzar desde el inicio.")});
+document.querySelector("#next").addEventListener("click",()=>{const line=lines.find(x=>Number(x.dataset.time)>audio.currentTime+1);if(line&&audio.readyState)audio.currentTime=Number(line.dataset.time);else notify("No hay otra sección disponible.")});
+document.querySelector("#mute").addEventListener("click",e=>{audio.muted=!audio.muted;e.currentTarget.setAttribute("aria-label",audio.muted?"Activar sonido":"Silenciar");e.currentTarget.textContent=audio.muted?"◖×":"◖))"});
+document.querySelector("#show-lyrics").addEventListener("click",()=>{document.querySelector("#lyrics").scrollIntoView({behavior:"smooth",block:"center"});scroll.focus({preventScroll:true})});
+document.querySelector("#info").addEventListener("click",()=>document.querySelector("#about").scrollIntoView({behavior:"smooth"}));
+document.querySelector("#copy-lyrics").addEventListener("click",async()=>{try{await navigator.clipboard.writeText(lines.map(x=>x.innerText.replace(/\n/g," ")).join("\n\n"));notify("Letra copiada.")}catch{notify("Tu navegador no permitió copiar la letra.")}});
+function setActive(i,scrollIntoView=true){lines.forEach((line,j)=>{line.classList.toggle("active",i===j);if(i===j&&scrollIntoView)line.scrollIntoView({behavior:"smooth",block:"nearest"})})}
+lines.forEach((line,i)=>line.addEventListener("click",()=>{setActive(i);if(audio.readyState)audio.currentTime=Number(line.dataset.time);else notify("Añade el MP3 para saltar a esta parte de la canción.")}));
+const menu=document.querySelector(".mobile-menu"),nav=document.querySelector(".main-nav");menu.addEventListener("click",()=>{const open=nav.classList.toggle("open");menu.setAttribute("aria-expanded",String(open))});nav.querySelectorAll("a").forEach(a=>a.addEventListener("click",()=>{nav.classList.remove("open");menu.setAttribute("aria-expanded","false")}));
+})();
