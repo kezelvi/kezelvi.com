@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#e8e7e2"><meta name="description" content="Cuando te veo canto — Kezelvi. Música, letra y universo visual.">
+<title>Cuando te veo canto — Kezelvi</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Patrick+Hand&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<main class="browser-window">
+<header class="topbar"><div class="window-dots" aria-hidden="true"><span></span><span></span><span></span></div>
+<nav class="main-nav" aria-label="Navegación"><a href="#music">MUSIC</a><i>•</i><a href="#lyrics">LYRICS</a><i>•</i><a href="#gallery">GALLERY</a><i>•</i><a href="#about">ABOUT</a></nav>
+<button class="mobile-menu" aria-label="Mostrar navegación" aria-expanded="false">☰</button></header>
+<section class="content-grid" id="music">
+<div class="art-stage"><img class="landscape-art" src="landscape.svg" alt="Paisaje ilustrado con arcoíris, río, árbol y flores">
+<div class="album-card"><img src="cover.svg" alt="Portada de Cuando te veo canto"></div>
+<div class="vinyl" aria-label="Disco de vinilo decorativo"><div class="vinyl-label">☀</div></div>
+<div class="flower flower-one" aria-hidden="true">🌷</div><div class="flower flower-two" aria-hidden="true">🌷</div><div class="flower flower-three" aria-hidden="true">🌼</div>
+</div>
+<aside class="lyrics-panel glass-panel" id="lyrics"><div class="panel-heading"><h1>Lyrics</h1><button id="copy-lyrics" class="icon-button" aria-label="Copiar letra" title="Copiar letra">▢</button></div>
+<div class="lyrics-scroll" id="lyrics-scroll" tabindex="0" aria-label="Letra de la canción">
+<p class="lyric-line active" data-time="0">Cuando te veo<br>canto ♥</p><p class="lyric-line" data-time="13">Bajo el cielo y<br>el arcoíris...</p><p class="lyric-line" data-time="27">El río sigue su<br>camino...</p><p class="lyric-line" data-time="42">Y las flores bailan<br>cuando estás aquí.</p><p class="lyric-line" data-time="58">Todo parece brillar<br>un poquito más.</p><p class="lyric-line" data-time="76">Cuando te veo,<br>vuelvo a cantar. ♥</p>
+</div><p class="lyrics-hint">Desliza para leer la letra</p></aside>
+</section>
+<section class="gallery-strip" id="gallery"><span>little things, lovely days</span><span class="gallery-heart">♥</span><span>music for the sunny side</span></section>
+<footer class="player glass-panel" aria-label="Reproductor musical">
+<div class="transport"><button class="player-button" id="restart" aria-label="Volver al inicio" title="Volver al inicio">|◀</button><button class="player-button play-button" id="play" aria-label="Reproducir" title="Reproducir"><span class="play-glyph">▶</span></button><button class="player-button" id="next" aria-label="Siguiente sección" title="Siguiente sección">▶|</button></div>
+<div class="time-display"><span id="current-time">01:14</span><span>/</span><span id="duration">03:22</span></div>
+<div class="waveform-wrap"><input id="seek" class="seek" type="range" min="0" max="202" value="74" aria-label="Posición de reproducción"><svg class="waveform" viewBox="0 0 600 68" preserveAspectRatio="none" aria-hidden="true"><defs><linearGradient id="waveColor"><stop stop-color="#238fe5"/><stop offset=".48" stop-color="#5bd5f2"/><stop offset=".63" stop-color="#f04e9c"/><stop offset=".8" stop-color="#8b50df"/><stop offset="1" stop-color="#ef5e96"/></linearGradient></defs><path d="M0 37 C25 4 42 60 70 34 S110 14 135 39 S174 57 202 28 S245 14 271 36 S315 53 342 26 S384 17 412 37 S454 52 481 29 S523 17 548 37 S578 48 600 30" fill="none" stroke="url(#waveColor)" stroke-width="14" stroke-linecap="round"/></svg></div>
+<div class="duration-mobile">/ 03:22</div><div class="player-tools"><button class="player-button tool-button" id="mute" aria-label="Silenciar" title="Silenciar">◖))</button><button class="player-button tool-button" id="show-lyrics" aria-label="Ir a la letra" title="Ir a la letra">☷</button><button class="player-button tool-button" id="info" aria-label="Información" title="Información">▤</button></div>
+<audio id="audio" preload="metadata"></audio></footer>
+</main>
+<section class="about" id="about"><span class="eyebrow">KEZELVI · SONG NOTES</span><h2>Un pequeño lugar para cantar.</h2><p>“Cuando te veo canto” es una postal hecha de cielo brillante, flores y melodías. Dale play para acompañar el paisaje.</p><p class="about-note">Para activar el reproductor, coloca tu MP3 en <code>audio/cuando-te-veo-canto.mp3</code>.</p></section>
+<div class="toast" id="toast" role="status" aria-live="polite"></div><script src="app.js"></script>
+</body></html>
